@@ -19,12 +19,6 @@ void GotoxyPlayer(int x, int y)
 	SetConsoleCursorPosition(hOut, Cur);
 }
 
-BOOL GotoxyTest(int x, int y)
-{
-	COORD Cur = { x, y };
-	return SetConsoleCursorPosition(hOut, Cur);
-}
-
 void Cursorset(bool _bVis, DWORD _dwSize)
 {
 	CONSOLE_CURSOR_INFO info;

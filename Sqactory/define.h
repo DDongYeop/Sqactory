@@ -9,7 +9,6 @@ enum class STAGE_TYPE
 	BEVERAGE = '4',
 	LABEL = '5',
 	CAP = '6',
-	PACKAGING = '7',
-	BOXSTACK = '8',
-	SELL = '9'
+	BOXSTACK = '7',
+	SELL = '8'
 };

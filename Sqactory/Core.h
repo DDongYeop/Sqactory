@@ -1,3 +1,10 @@
+#include <iostream>
+#include <conio.h>
+#include <Windows.h>
+#include <io.h>
+#include <fcntl.h>
+#include "Console.h"
+
 #pragma once
 typedef struct _tagpos
 {
@@ -7,12 +14,15 @@ typedef struct _tagpos
 
 class Core
 {
-private:
+public:
+	char m_cMap[20][30] = {};
+
+public:
 	Core();
 	~Core();
 
 public:
-	void Init(POS &_pPlayer);
+	void Init();
 	void Update(POS& _pPlayer);
-	void Render(POS& _pPlayer);
+	void Render();
 };

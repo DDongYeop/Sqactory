@@ -4,5 +4,11 @@ using namespace std;
 
 int main()
 {
-	POS tPlayerPos = {};
+	Core* core = new Core();
+
+	core->Init();
+	while (true)
+	{
+		core->Render();
+	}
 }

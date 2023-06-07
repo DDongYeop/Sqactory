@@ -1,4 +1,6 @@
-#include "Core.h"
+﻿#include "Core.h"
+
+using namespace std;
 
 Core::Core()
 {
@@ -8,14 +10,77 @@ Core::~Core()
 {
 }
 
-void Core::Init(POS& _pPlayer)
+void Core::Init()
 {
+	strcpy_s(m_cMap[0],  "00444444440000555555555000000");
+	strcpy_s(m_cMap[1],  "33444444443333333333333333330");
+	strcpy_s(m_cMap[2],  "3344444444333333333333333330");
+	strcpy_s(m_cMap[3],  "33444444443333333333333333330");
+	strcpy_s(m_cMap[4],  "00444444440000000000000003330");
+	strcpy_s(m_cMap[5],  "00000000000000000000000003330");
+	strcpy_s(m_cMap[6],  "00000000000000000000000003330");
+	strcpy_s(m_cMap[7],  "00000000000000000000000003330");
+	strcpy_s(m_cMap[8],  "00000000000000000000000003330");
+	strcpy_s(m_cMap[9],  "00000000000000000000000003330");
+	strcpy_s(m_cMap[10], "00000000000000100000000003330");
+	strcpy_s(m_cMap[11], "00000000000000000000000003330");
+	strcpy_s(m_cMap[12], "00000000000000000000000003330");
+	strcpy_s(m_cMap[13], "00000000000000000000000003330");
+	strcpy_s(m_cMap[14], "00000000000000000000000003330");
+	strcpy_s(m_cMap[15], "00000000000000000000000003330");
+	strcpy_s(m_cMap[16], "00000000000000033333333333330");
+	strcpy_s(m_cMap[17], "00000000000000033333333333330");
+	strcpy_s(m_cMap[18], "00000000000000033333333333330");
+	strcpy_s(m_cMap[19], "00000000000000000000000000000");
 }
 
 void Core::Update(POS& _pPlayer)
 {
 }
 
-void Core::Render(POS& _pPlayer)
+void Core::Render()
 {
+	int prevmode = _setmode(_fileno(stdout), _O_U16TEXT);
+	Gotoxy(0, 0);
+	for (int y = 0; y < 20; ++y)
+	{
+		for (int x = 0; x < 30; ++x)
+		{
+			switch (m_cMap[y][x])
+			{
+			case '0':
+				SetColor((int)COLOR::WHITE, (int)COLOR::WHITE);
+				break;
+			case '1':
+				SetColor((int)COLOR::BLACK, (int)COLOR::BLACK);
+				break;
+			case '2':
+				SetColor((int)COLOR::RED, (int)COLOR::RED);
+				break;
+			case '3':
+				SetColor((int)COLOR::GRAY, (int)COLOR::GRAY);
+				break;
+			case '4':
+				SetColor((int)COLOR::LIGHY_VIOLET, (int)COLOR::LIGHY_VIOLET);
+				break;
+			case '5':
+				SetColor((int)COLOR::YELLOW, (int)COLOR::YELLOW);
+				break;
+			case '6':
+				SetColor((int)COLOR::LIGHT_RED, (int)COLOR::LIGHT_RED);
+				break;
+			case '7':
+				SetColor((int)COLOR::YELLOW, (int)COLOR::YELLOW);
+				break;
+			case '8':
+				SetColor((int)COLOR::GREEN, (int)COLOR::GREEN);
+				break;
+			default:
+				break;
+			}
+			wcout << L"██";
+		}
+		wcout << '\n';
+	}
+	int Curmode = _setmode(_fileno(stdout), prevmode);
 }
