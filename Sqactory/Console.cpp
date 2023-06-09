@@ -2,11 +2,6 @@
 #include "Console.h"
 static HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-void FullScreen()
-{
-	SetConsoleDisplayMode(hOut, CONSOLE_FULLSCREEN_MODE, NULL);
-}
-
 void Gotoxy(int x, int y)
 {
 	COORD Cur = { x, y };
