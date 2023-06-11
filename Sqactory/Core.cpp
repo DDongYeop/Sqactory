@@ -12,7 +12,7 @@ Core::~Core()
 
 void Core::Init()
 {
-	m_pPlayer.x = 15;
+	m_pPlayer.x = 14;
 	m_pPlayer.y = 10;
 
 	strcpy_s(m_cMap[0],  "00044444444000555555550000000");
@@ -41,44 +41,41 @@ void Core::Update()
 {
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
-		if (m_pPlayer.y - 1 > 0 && *m_cMap[m_pPlayer.y - 1, m_pPlayer.x] == '0')
+		if (m_pPlayer.y - 1 > -1 && m_cMap[m_pPlayer.y - 1][m_pPlayer.x] == '0')
 		{
-			//m_cMap[m_pPlayer.y, m_pPlayer.x] = '0';
-			strcat_s(m_cMap[m_pPlayer.y, m_pPlayer.x], "0");
-			SetColor((int)COLOR::BLACK, (int)COLOR::LIGHT_RED);
+			m_cMap[m_pPlayer.y][m_pPlayer.x] = '0';
 			--m_pPlayer.y;
-			//cout << *m_cMap[m_pPlayer.y, m_pPlayer.x];
-			strcat_s(m_cMap[m_pPlayer.y, m_pPlayer.x], "0");
+			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
 		}
 		Sleep(100);
 	}
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 	{
-		if (m_pPlayer.y + 1 < 20 && *m_cMap[m_pPlayer.y + 1, m_pPlayer.x] == '0')
+		if (m_pPlayer.y + 1 < 20 && m_cMap[m_pPlayer.y + 1][m_pPlayer.x] == '0')
 		{
-			*m_cMap[m_pPlayer.y, m_pPlayer.x] = '0';
+			m_cMap[m_pPlayer.y][m_pPlayer.x] = '0';
 			++m_pPlayer.y;
-			*m_cMap[m_pPlayer.y, m_pPlayer.x] = '1';
+			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
 		}
 		Sleep(100);
 	}
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
-		if (m_pPlayer.x - 1 > 0 && *m_cMap[m_pPlayer, m_pPlayer.x - 1] == '0')
+		if (m_pPlayer.x - 1 > -1 && m_cMap[m_pPlayer.y][m_pPlayer.x - 1] == '0')
 		{
-			*m_cMap[m_pPlayer.y, m_pPlayer.x] = '0';
-			--m_pPlayer.y;
-			*m_cMap[m_pPlayer.y, m_pPlayer.x] = '1';
+			m_cMap[m_pPlayer.y][m_pPlayer.x] = '0';
+			--m_pPlayer.x;
+			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
 		}
 		Sleep(100);
 	}
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
-		if (m_pPlayer.x + 1 < 30 && *m_cMap[m_pPlayer.y, m_pPlayer.x + 1] == '0')
+		if (m_pPlayer.x + 1 < 28 && m_cMap[m_pPlayer.y][m_pPlayer.x + 1] == '0')
 		{
-			*m_cMap[m_pPlayer.y, m_pPlayer.x] = '0';
-			++m_pPlayer.y;
-			*m_cMap[m_pPlayer.y, m_pPlayer.x] = '1';
+			m_cMap[m_pPlayer.y][m_pPlayer.x] = '0';
+			++m_pPlayer.x;
+			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
 		}
 		Sleep(100);
 	}
@@ -128,6 +125,7 @@ void Core::Render()
 			wcout << L"██";
 		}
 		wcout << '\n';
+		SetColor((int)COLOR::BLACK, (int)COLOR::BLACK);
 	}
 	int Curmode = _setmode(_fileno(stdout), prevmode);
 }
