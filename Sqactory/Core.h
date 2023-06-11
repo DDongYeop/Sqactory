@@ -16,6 +16,7 @@ class Core
 {
 public:
 	char m_cMap[20][30] = {};
+	POS m_pPlayer;
 
 public:
 	Core();
@@ -23,6 +24,6 @@ public:
 
 public:
 	void Init();
-	void Update(POS& _pPlayer);
+	void Update();
 	void Render();
 };

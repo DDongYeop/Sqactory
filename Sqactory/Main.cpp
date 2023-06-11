@@ -13,6 +13,7 @@ int main()
 	while (true)
 	{
 		core->Render();
+		core->Update();
 	}
 }
 
