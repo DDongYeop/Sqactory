@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Core.h"
+#include "StartScene.h"
 using namespace std;
 
 void Init();
@@ -8,8 +9,13 @@ int main()
 {
 	Init();
 	Core* core = new Core();
-
+	StartScene* startScene = new StartScene();
+	
 	core->Init();
+	startScene->Title();
+
+	system("cls");
+
 	while (true)
 	{
 		core->Render();

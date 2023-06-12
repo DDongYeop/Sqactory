@@ -47,17 +47,17 @@ void Core::Update()
 			--m_pPlayer.y;
 			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
 		}
-		Sleep(100);
+		Sleep(75);
 	}
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 	{
-		if (m_pPlayer.y + 1 < 20 && m_cMap[m_pPlayer.y + 1][m_pPlayer.x] == '0')
+		if (m_pPlayer.y + 1 < 19 && m_cMap[m_pPlayer.y + 1][m_pPlayer.x] == '0')
 		{
 			m_cMap[m_pPlayer.y][m_pPlayer.x] = '0';
 			++m_pPlayer.y;
 			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
 		}
-		Sleep(100);
+		Sleep(75);
 	}
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
@@ -67,7 +67,7 @@ void Core::Update()
 			--m_pPlayer.x;
 			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
 		}
-		Sleep(100);
+		Sleep(75);
 	}
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
@@ -77,7 +77,7 @@ void Core::Update()
 			++m_pPlayer.x;
 			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
 		}
-		Sleep(100);
+		Sleep(75);
 	}
 
 }
