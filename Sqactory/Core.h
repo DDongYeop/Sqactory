@@ -1,29 +1,11 @@
-#include <iostream>
-#include <conio.h>
-#include <Windows.h>
-#include <io.h>
-#include <fcntl.h>
-#include "Console.h"
-
 #pragma once
+
 typedef struct _tagpos
 {
 	int x;
 	int y;
-}POS, *PPOS;
+}POS, * PPOS;
 
-class Core
-{
-public:
-	char m_cMap[20][30] = {};
-	POS m_pPlayer;
-
-public:
-	Core();
-	~Core();
-
-public:
-	void Init();
-	void Update();
-	void Render();
-};
+void Init(char _cMap[20][30], POS& _pPlayer);
+void Render(char _cMap[20][30], POS& _pPlayer);
+void Update(char _cMap[20][30], POS& _pPlayer);

@@ -1,5 +1,7 @@
 #include <iostream>
+#include <Windows.h>
 #include "Core.h"
+#include "Console.h"
 #include "StartScene.h"
 using namespace std;
 
@@ -7,19 +9,23 @@ void Init();
 
 int main()
 {
+	SetColor((int)COLOR::WHITE, (int)COLOR::BLACK);
+	system("cls");
 	Init();
-	Core* core = new Core();
 	StartScene* startScene = new StartScene();
 	
-	core->Init();
+	char cMap[20][30] = {};
+	POS pPlayer;
+
+	Init(cMap, pPlayer);
 	startScene->Title();
 
 	system("cls");
 
 	while (true)
 	{
-		core->Render();
-		core->Update();
+		Render(cMap, pPlayer);
+		Update(cMap, pPlayer);
 	}
 }
 

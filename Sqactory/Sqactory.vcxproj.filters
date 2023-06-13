@@ -11,6 +11,12 @@
     <Filter Include="Util">
       <UniqueIdentifier>{7433fcbf-d322-400a-bd8c-3414f0551b97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OBJ">
+      <UniqueIdentifier>{ab0df2de-20bd-483a-b6b8-6c43d52944d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{c0829b09-9175-4d11-84ef-5eeb73166d41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -25,11 +31,14 @@
     <ClCompile Include="StartScene.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Bottle.cpp">
+      <Filter>OBJ</Filter>
+    </ClCompile>
+    <ClCompile Include="BottleManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="define.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -37,6 +46,15 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="StartScene.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bottle.h">
+      <Filter>OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="BottleManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

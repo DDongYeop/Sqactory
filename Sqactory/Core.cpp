@@ -1,88 +1,86 @@
-﻿#include "Core.h"
+﻿#include <iostream>
+#include <Windows.h>
+#include <io.h>
+#include <fcntl.h>
+#include "Core.h"
+#include "Console.h"
 
 using namespace std;
 
-Core::Core()
+
+void Init(char _cMap[20][30], POS& _pPlayer)
 {
+	_pPlayer.x = 14;
+	_pPlayer.y = 10;
+
+	strcpy_s(_cMap[0],  "00044444444000555555550000000");
+	strcpy_s(_cMap[1],  "33344444444333555555553333300");
+	strcpy_s(_cMap[2],  "33344444444333555555553333300");
+	strcpy_s(_cMap[3],  "33344444444333555555553333300");
+	strcpy_s(_cMap[4],  "00044444444000555555550033300");
+	strcpy_s(_cMap[5],  "00000000000000000000000033300");
+	strcpy_s(_cMap[6],  "00000000000000000000000033300");
+	strcpy_s(_cMap[7],  "00000000000000000000000666660");
+	strcpy_s(_cMap[8],  "88000000000000000000000666660");
+	strcpy_s(_cMap[9],  "88000000000000000000000666660");
+	strcpy_s(_cMap[10], "88000000000000100000000666660");
+	strcpy_s(_cMap[11], "88000000000000000000000666660");
+	strcpy_s(_cMap[12], "88000000000000000000000666660");
+	strcpy_s(_cMap[13], "00000000000000000000000666660");
+	strcpy_s(_cMap[14], "00000000000000000000000033300");
+	strcpy_s(_cMap[15], "00000000000000000000000033300");
+	strcpy_s(_cMap[16], "00000000000000333333333333300");
+	strcpy_s(_cMap[17], "00000000000000333333333333300");
+	strcpy_s(_cMap[18], "00000000000000333333333333300");
+	strcpy_s(_cMap[19], "00000000000000000000000000000");
 }
 
-Core::~Core()
-{
-}
-
-void Core::Init()
-{
-	m_pPlayer.x = 14;
-	m_pPlayer.y = 10;
-
-	strcpy_s(m_cMap[0],  "00044444444000555555550000000");
-	strcpy_s(m_cMap[1],  "33344444444333555555553333300");
-	strcpy_s(m_cMap[2],  "33344444444333555555553333300");
-	strcpy_s(m_cMap[3],  "33344444444333555555553333300");
-	strcpy_s(m_cMap[4],  "00044444444000555555550033300");
-	strcpy_s(m_cMap[5],  "00000000000000000000000033300");
-	strcpy_s(m_cMap[6],  "00000000000000000000000033300");
-	strcpy_s(m_cMap[7],  "00000000000000000000000666660");
-	strcpy_s(m_cMap[8],  "88000000000000000000000666660");
-	strcpy_s(m_cMap[9],  "88000000000000000000000666660");
-	strcpy_s(m_cMap[10], "88000000000000100000000666660");
-	strcpy_s(m_cMap[11], "88000000000000000000000666660");
-	strcpy_s(m_cMap[12], "88000000000000000000000666660");
-	strcpy_s(m_cMap[13], "00000000000000000000000666660");
-	strcpy_s(m_cMap[14], "00000000000000000000000033300");
-	strcpy_s(m_cMap[15], "00000000000000000000000033300");
-	strcpy_s(m_cMap[16], "00000000000000333333333333300");
-	strcpy_s(m_cMap[17], "00000000000000333333333333300");
-	strcpy_s(m_cMap[18], "00000000000000333333333333300");
-	strcpy_s(m_cMap[19], "00000000000000000000000000000");
-}
-
-void Core::Update()
+void Update(char _cMap[20][30], POS& _pPlayer)
 {
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
-		if (m_pPlayer.y - 1 > -1 && m_cMap[m_pPlayer.y - 1][m_pPlayer.x] == '0')
+		if (_pPlayer.y - 1 > -1 && _cMap[_pPlayer.y - 1][_pPlayer.x] == '0')
 		{
-			m_cMap[m_pPlayer.y][m_pPlayer.x] = '0';
-			--m_pPlayer.y;
-			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
+			_cMap[_pPlayer.y][_pPlayer.x] = '0';
+			--_pPlayer.y;
+			_cMap[_pPlayer.y][_pPlayer.x] = '1';
 		}
 		Sleep(75);
 	}
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 	{
-		if (m_pPlayer.y + 1 < 19 && m_cMap[m_pPlayer.y + 1][m_pPlayer.x] == '0')
+		if (_pPlayer.y + 1 < 19 && _cMap[_pPlayer.y + 1][_pPlayer.x] == '0')
 		{
-			m_cMap[m_pPlayer.y][m_pPlayer.x] = '0';
-			++m_pPlayer.y;
-			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
+			_cMap[_pPlayer.y][_pPlayer.x] = '0';
+			++_pPlayer.y;
+			_cMap[_pPlayer.y][_pPlayer.x] = '1';
 		}
 		Sleep(75);
 	}
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
-		if (m_pPlayer.x - 1 > -1 && m_cMap[m_pPlayer.y][m_pPlayer.x - 1] == '0')
+		if (_pPlayer.x - 1 > -1 && _cMap[_pPlayer.y][_pPlayer.x - 1] == '0')
 		{
-			m_cMap[m_pPlayer.y][m_pPlayer.x] = '0';
-			--m_pPlayer.x;
-			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
+			_cMap[_pPlayer.y][_pPlayer.x] = '0';
+			--_pPlayer.x;
+			_cMap[_pPlayer.y][_pPlayer.x] = '1';
 		}
 		Sleep(75);
 	}
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
-		if (m_pPlayer.x + 1 < 28 && m_cMap[m_pPlayer.y][m_pPlayer.x + 1] == '0')
+		if (_pPlayer.x + 1 < 28 && _cMap[_pPlayer.y][_pPlayer.x + 1] == '0')
 		{
-			m_cMap[m_pPlayer.y][m_pPlayer.x] = '0';
-			++m_pPlayer.x;
-			m_cMap[m_pPlayer.y][m_pPlayer.x] = '1';
+			_cMap[_pPlayer.y][_pPlayer.x] = '0';
+			++_pPlayer.x;
+			_cMap[_pPlayer.y][_pPlayer.x] = '1';
 		}
 		Sleep(75);
 	}
 
 }
 
-void Core::Render()
+void Render(char _cMap[20][30], POS& _pPlayer)
 {
 	int prevmode = _setmode(_fileno(stdout), _O_U16TEXT);
 	Gotoxy(0, 0);
@@ -90,7 +88,7 @@ void Core::Render()
 	{
 		for (int x = 0; x < 30; ++x)
 		{
-			switch (m_cMap[y][x])
+			switch (_cMap[y][x])
 			{
 			case '0':
 				SetColor((int)COLOR::WHITE, (int)COLOR::WHITE);
