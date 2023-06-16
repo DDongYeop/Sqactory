@@ -51,11 +51,11 @@
     <ClInclude Include="Bottle.h">
       <Filter>OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="BottleManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Core.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="BottleManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

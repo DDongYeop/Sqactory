@@ -1,5 +1,5 @@
 #pragma once
-class BottleManager
-{
-};
 
+void AddBottle();
+void BottleMovement(char cMap[20][30]);
+void BottleDelete();

@@ -8,7 +8,5 @@ enum class STAGE_TYPE
 	LINE = '3',
 	BEVERAGE = '4',
 	LABEL = '5',
-	CAP = '6',
-	BOXSTACK = '7',
-	SELL = '8'
+	CAP = '6'
 };
