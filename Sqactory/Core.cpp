@@ -35,7 +35,7 @@ void Init(char _cMap[20][30], POS& _pPlayer)
 	strcpy_s(_cMap[19], "00000666666666666660000000000");
 }
 
-void Update(char _cMap[20][30], POS& _pPlayer)
+char Update(char _cMap[20][30], POS& _pPlayer)
 {
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
@@ -59,7 +59,7 @@ void Update(char _cMap[20][30], POS& _pPlayer)
 	}
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
-		if (_pPlayer.x - 1 > -1 && _cMap[_pPlayer.y][_pPlayer.x - 1] == '0')
+		if (_pPlayer.x - 1 > 0 && _cMap[_pPlayer.y][_pPlayer.x - 1] == '0')
 		{
 			_cMap[_pPlayer.y][_pPlayer.x] = '0';
 			--_pPlayer.x;
@@ -78,9 +78,19 @@ void Update(char _cMap[20][30], POS& _pPlayer)
 		Sleep(75);
 	}
 
-}
-
-void Render(char _cMap[20][30], POS& _pPlayer)
+	if		(_cMap[_pPlayer.y + 1][_pPlayer.x] != '0' && _cMap[_pPlayer.y + 1][_pPlayer.x] != '3')
+		return _cMap[_pPlayer.y + 1][_pPlayer.x];
+	else if (_cMap[_pPlayer.y - 1][_pPlayer.x] != '0' && _cMap[_pPlayer.y - 1][_pPlayer.x] != '3')
+		return _cMap[_pPlayer.y - 1][_pPlayer.x];
+	else if (_cMap[_pPlayer.y][_pPlayer.x + 1] != '0' && _cMap[_pPlayer.y][_pPlayer.x + 1] != '3')
+		return _cMap[_pPlayer.y][_pPlayer.x + 1];
+	else if (_cMap[_pPlayer.y][_pPlayer.x - 1] != '0' && _cMap[_pPlayer.y][_pPlayer.x - 1] != '3')
+		return _cMap[_pPlayer.y][_pPlayer.x - 1];
+	else
+		return '0';
+} 
+ 
+void Render(char _cMap[20][30], POS& _pPlayer, char _cNearObj, vector<Machine*> machines)
 {
 	int prevmode = _setmode(_fileno(stdout), _O_U16TEXT);
 	Gotoxy(0, 0);
@@ -123,7 +133,65 @@ void Render(char _cMap[20][30], POS& _pPlayer)
 			wcout << L"██";
 		}
 		wcout << '\n';
-		SetColor((int)COLOR::BLACK, (int)COLOR::BLACK);
+		SetColor((int)COLOR::WHITE, (int)COLOR::BLACK);
 	}
+
 	int Curmode = _setmode(_fileno(stdout), prevmode);
+
+	if (_cNearObj != '0')
+	{
+		switch (_cNearObj)
+		{
+		case '4':
+			Gotoxy(30, 21);
+			cout << "\rBeverrage machine";
+
+			Gotoxy(30, 22);
+			cout << "\rLEVEL : " << machines[0]->GetLevel();
+
+			Gotoxy(30, 23);
+			cout << "\rUpgradeCost : " << machines[0]->GetUpgradeCost();
+
+			Gotoxy(30, 24);
+			cout << "\rMoney : " << machines[0]->GetMoney();
+			break;
+		case '5':
+			Gotoxy(30, 21);
+			cout << "\rLabel machine";
+
+			Gotoxy(30, 22);
+			cout << "\rLEVEL : " << machines[1]->GetLevel();
+
+			Gotoxy(30, 23);
+			cout << "\rUpgradeCost : " << machines[1]->GetUpgradeCost();
+
+			Gotoxy(30, 24);
+			cout << "\rMoney : " << machines[1]->GetMoney();
+			break;
+		case '6':
+			Gotoxy(30, 21);
+			cout << "\rCap machine";
+
+			Gotoxy(30, 22);
+			cout << "\rLEVEL : " << machines[2]->GetLevel();
+
+			Gotoxy(30, 23);
+			cout << "\rUpgradeCost : " << machines[2]->GetUpgradeCost();
+
+			Gotoxy(30, 24);
+			cout << "\rMoney : " << machines[2]->GetMoney();
+			break;
+		}
+	}
+	else
+	{
+		Gotoxy(30, 21);
+		cout << "\r                              ";
+		Gotoxy(30, 22);
+		cout << "\r                              ";
+		Gotoxy(30, 23);
+		cout << "\r                              ";
+		Gotoxy(30, 24);
+		cout << "\r                              ";
+	}
 }

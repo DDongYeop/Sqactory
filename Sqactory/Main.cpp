@@ -1,10 +1,11 @@
 #include <iostream>
 #include <Windows.h>
+#include <vector>
 #include "Core.h"
 #include "Console.h"
 #include "StartScene.h"
-
 #include "Bottle.h"
+#include "Machine.h"
 
 using namespace std;
 
@@ -16,9 +17,13 @@ int main()
 	system("cls");
 	Init();
 	StartScene* startScene = new StartScene;
-	
+	vector<Machine*> machines;
+	for (int i = 0; i < 3; ++i)
+		machines.push_back(new Machine());
+
 	char cMap[20][30] = {};
 	POS pPlayer;
+	char cNearObj;
 
 	Init(cMap, pPlayer);
 	startScene->Title();
@@ -27,8 +32,8 @@ int main()
 
 	while (true)
 	{
-		Render(cMap, pPlayer);
-		Update(cMap, pPlayer);
+		cNearObj = Update(cMap, pPlayer);
+		Render(cMap, pPlayer, cNearObj, machines);
 	}
 }
 
