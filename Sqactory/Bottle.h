@@ -8,7 +8,7 @@ public:
 	~Bottle();
 
 public:
-	void Movement(char cMap[20][30]);
+	int Movement(char cMap[20][30], int &iMoney);
 
 private:
 	POS c_mPosition;

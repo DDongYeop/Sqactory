@@ -4,9 +4,11 @@
 #include <fcntl.h>
 #include "Core.h"
 #include "Console.h"
+#include "MachineManager.h"
 
 using namespace std;
 
+char cNearIndex;
 
 void Init(char _cMap[20][30], POS& _pPlayer)
 {
@@ -35,7 +37,7 @@ void Init(char _cMap[20][30], POS& _pPlayer)
 	strcpy_s(_cMap[19], "00000666666666666660000000000");
 }
 
-char Update(char _cMap[20][30], POS& _pPlayer)
+char Update(char _cMap[20][30], POS& _pPlayer, int& _iMoney)
 {
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
@@ -79,18 +81,36 @@ char Update(char _cMap[20][30], POS& _pPlayer)
 	}
 
 	if		(_cMap[_pPlayer.y + 1][_pPlayer.x] != '0' && _cMap[_pPlayer.y + 1][_pPlayer.x] != '3')
-		return _cMap[_pPlayer.y + 1][_pPlayer.x];
+		cNearIndex = _cMap[_pPlayer.y + 1][_pPlayer.x];
 	else if (_cMap[_pPlayer.y - 1][_pPlayer.x] != '0' && _cMap[_pPlayer.y - 1][_pPlayer.x] != '3')
-		return _cMap[_pPlayer.y - 1][_pPlayer.x];
+		cNearIndex = _cMap[_pPlayer.y - 1][_pPlayer.x];
 	else if (_cMap[_pPlayer.y][_pPlayer.x + 1] != '0' && _cMap[_pPlayer.y][_pPlayer.x + 1] != '3')
-		return _cMap[_pPlayer.y][_pPlayer.x + 1];
+		cNearIndex = _cMap[_pPlayer.y][_pPlayer.x + 1];
 	else if (_cMap[_pPlayer.y][_pPlayer.x - 1] != '0' && _cMap[_pPlayer.y][_pPlayer.x - 1] != '3')
-		return _cMap[_pPlayer.y][_pPlayer.x - 1];
+		cNearIndex = _cMap[_pPlayer.y][_pPlayer.x - 1];
 	else
-		return '0';
+		cNearIndex = '0';
+	
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
+		switch (cNearIndex)
+		{
+		case '4':
+			MachineUpgrade(0, _iMoney);
+			break;
+		case '5':
+			MachineUpgrade(1, _iMoney);
+			break;
+		case '6':
+			MachineUpgrade(2, _iMoney);
+			break;
+		}
+	}
+
+	return cNearIndex;
 } 
  
-void Render(char _cMap[20][30], POS& _pPlayer, char _cNearObj, vector<Machine*> machines)
+void Render(char _cMap[20][30], POS& _pPlayer, char _cNearObj, int _iMoney)
 {
 	int prevmode = _setmode(_fileno(stdout), _O_U16TEXT);
 	Gotoxy(0, 0);
@@ -135,63 +155,67 @@ void Render(char _cMap[20][30], POS& _pPlayer, char _cNearObj, vector<Machine*> 
 		wcout << '\n';
 		SetColor((int)COLOR::WHITE, (int)COLOR::BLACK);
 	}
-
 	int Curmode = _setmode(_fileno(stdout), prevmode);
+
+	SetColor((int)COLOR::LIGHT_YELLOW, (int)COLOR::BLACK);
+	Gotoxy(30, 21);
+	cout << "\rMoney : " << _iMoney;
+	SetColor((int)COLOR::WHITE, (int)COLOR::BLACK);
 
 	if (_cNearObj != '0')
 	{
 		switch (_cNearObj)
 		{
 		case '4':
-			Gotoxy(30, 21);
-			cout << "\rBeverrage machine";
-
-			Gotoxy(30, 22);
-			cout << "\rLEVEL : " << machines[0]->GetLevel();
-
 			Gotoxy(30, 23);
-			cout << "\rUpgradeCost : " << machines[0]->GetUpgradeCost();
+			cout << "\r  Beverrage machine";
 
 			Gotoxy(30, 24);
-			cout << "\rMoney : " << machines[0]->GetMoney();
+			cout << "\r  LEVEL : " << GetMachineIndex(0, 1);
+
+			Gotoxy(30, 25);
+			cout << "\r  UpgradeCost : " << GetMachineIndex(0, 2);
+
+			Gotoxy(30, 26);
+			cout << "\r  Money : " << GetMachineIndex(0, 2);
 			break;
 		case '5':
-			Gotoxy(30, 21);
-			cout << "\rLabel machine";
-
-			Gotoxy(30, 22);
-			cout << "\rLEVEL : " << machines[1]->GetLevel();
-
 			Gotoxy(30, 23);
-			cout << "\rUpgradeCost : " << machines[1]->GetUpgradeCost();
+			cout << "\r  Label machine";
 
 			Gotoxy(30, 24);
-			cout << "\rMoney : " << machines[1]->GetMoney();
+			cout << "\r  LEVEL : " << GetMachineIndex(1, 1);
+
+			Gotoxy(30, 25);
+			cout << "\r  UpgradeCost : " << GetMachineIndex(1, 2);
+
+			Gotoxy(30, 26);
+			cout << "\r  Money : " << GetMachineIndex(1, 3);
 			break;
 		case '6':
-			Gotoxy(30, 21);
-			cout << "\rCap machine";
-
-			Gotoxy(30, 22);
-			cout << "\rLEVEL : " << machines[2]->GetLevel();
-
 			Gotoxy(30, 23);
-			cout << "\rUpgradeCost : " << machines[2]->GetUpgradeCost();
+			cout << "\r  Cap machine";
 
 			Gotoxy(30, 24);
-			cout << "\rMoney : " << machines[2]->GetMoney();
+			cout << "\r  LEVEL : " << GetMachineIndex(2, 1);
+
+			Gotoxy(30, 25);
+			cout << "\r  UpgradeCost : " << GetMachineIndex(2, 2);
+
+			Gotoxy(30, 26);
+			cout << "\r  Money : " << GetMachineIndex(2, 3);
 			break;
 		}
 	}
 	else
 	{
-		Gotoxy(30, 21);
-		cout << "\r                              ";
-		Gotoxy(30, 22);
-		cout << "\r                              ";
 		Gotoxy(30, 23);
 		cout << "\r                              ";
 		Gotoxy(30, 24);
+		cout << "\r                              ";
+		Gotoxy(30, 25);
+		cout << "\r                              ";
+		Gotoxy(30, 26);
 		cout << "\r                              ";
 	}
 }

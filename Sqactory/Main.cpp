@@ -6,6 +6,8 @@
 #include "StartScene.h"
 #include "Bottle.h"
 #include "Machine.h"
+#include "BottleManager.h"
+#include "MachineManager.h"
 
 using namespace std;
 
@@ -17,30 +19,30 @@ int main()
 	system("cls");
 	Init();
 	StartScene* startScene = new StartScene;
-	vector<Machine*> machines;
-	for (int i = 0; i < 3; ++i)
-		machines.push_back(new Machine());
 
 	char cMap[20][30] = {};
 	POS pPlayer;
 	char cNearObj;
-
-	Init(cMap, pPlayer);
+	int iMoney = 0;
 	startScene->Title();
+	Init(cMap, pPlayer);
+	MachineInit();
 
 	system("cls");
 
 	while (true)
 	{
-		cNearObj = Update(cMap, pPlayer);
-		Render(cMap, pPlayer, cNearObj, machines);
+		cNearObj = Update(cMap, pPlayer, iMoney);
+		Render(cMap, pPlayer, cNearObj, iMoney);
+		AddBottle();
+		BottleMovement(cMap, iMoney);
 	}
 }
 
 void Init()
 {
 	//화면 크기 설정.
-	system("mode con cols=60 lines=27");
+	system("mode con cols=60 lines=28");
 
 	//창 이름 정해줌.
 	SetConsoleTitle(TEXT("Sqactory")); 

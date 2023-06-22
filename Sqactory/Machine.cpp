@@ -1,6 +1,6 @@
 #include "Machine.h"
 
-Machine::Machine() : m_iLevel{0}, m_iMoney{0}, m_iUpgradeCost{0}
+Machine::Machine() : m_iLevel{1}, m_iMoney{0}, m_iUpgradeCost{1}
 {
 }
 
@@ -16,8 +16,8 @@ bool Machine::Upgrade(int& _playerMoney)
 	_playerMoney -= m_iUpgradeCost;
 	++m_iLevel;
 
-	// UpgradeCost add
-	// Money up
+	m_iUpgradeCost *= 2;
+	++m_iMoney;
 
 	return true;
 }

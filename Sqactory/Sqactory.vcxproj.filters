@@ -40,6 +40,9 @@
     <ClCompile Include="Machine.cpp">
       <Filter>OBJ</Filter>
     </ClCompile>
+    <ClCompile Include="MachineManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -62,6 +65,9 @@
     </ClInclude>
     <ClInclude Include="Machine.h">
       <Filter>OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

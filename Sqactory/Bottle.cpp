@@ -14,7 +14,7 @@ Bottle::~Bottle()
 {
 }
 
-void Bottle::Movement(char cMap[20][30])
+int Bottle::Movement(char cMap[20][30], int& iMoney)
 {
 	if (c_mLastMap == '3')
 		cMap[c_mPosition.y][c_mPosition.x] = '3';
@@ -36,6 +36,12 @@ void Bottle::Movement(char cMap[20][30])
 
 	if (c_mPosition.x < 0)
 	{
+		c_mLastMap = cMap[c_mPosition.y][c_mPosition.x];
+		if (cMap[c_mPosition.y][c_mPosition.x] == '3')
+			cMap[c_mPosition.y][c_mPosition.x] = '2';
+
+		BottleDelete(iMoney);
+		return 1;
 	}
 
 	if (cMap)
@@ -46,5 +52,6 @@ void Bottle::Movement(char cMap[20][30])
 			cMap[c_mPosition.y][c_mPosition.x] = '2';
 		}
 	}
-	Sleep(100);
+
+	return 0;
 }
