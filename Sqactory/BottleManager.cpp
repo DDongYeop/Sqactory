@@ -1,6 +1,8 @@
 #include <list>
 #include <Windows.h>
 #include <ctime>
+#include <mmsystem.h>
+#include <Digitalv.h>
 #include "Bottle.h"
 #include "BottleManager.h"
 #include "MachineManager.h"
@@ -15,7 +17,7 @@ void BottleManagerInit(int& iMoney)
 {
 }
 
-void AddBottle()
+void AddBottle(MCI_OPEN_PARMS& OoenEffect, UINT& Effectid)
 {
 	spawnIndex++;
 
@@ -24,10 +26,11 @@ void AddBottle()
 		spawnIndex = 0;
 		Bottle* bottle = new Bottle();
 		m_lBottleList.push_back(bottle);
+		PlayAddBottle(OoenEffect, Effectid);
 	}
 }
 
-void BottleMovement(char cMap[20][30], int& iMoney)
+void BottleMovement(char cMap[20][30], int& iMoney, MCI_OPEN_PARMS& OoenEffect, UINT& Effectid)
 {
 	moveIndex++;
 
@@ -35,14 +38,39 @@ void BottleMovement(char cMap[20][30], int& iMoney)
 	{
 		moveIndex = 0;
 		for (auto b : m_lBottleList)
-			if (b->Movement(cMap, iMoney) == 1)
+			if (b->Movement(cMap, iMoney, OoenEffect, Effectid) == 1)
 				break;
 	}
 }
 
-void BottleDelete(int& iMoney)
+void BottleDelete(int& iMoney, MCI_OPEN_PARMS& OoenEffect, UINT& Effectid)
 {
 	delete(m_lBottleList.front());
 	m_lBottleList.pop_front();
 	iMoney += GetAllMoney() + 1;
+	PlayAddMoney(OoenEffect, Effectid);
+}
+
+void PlayAddBottle(MCI_OPEN_PARMS& OoenEffect, UINT& Effectid)
+{
+	OoenEffect.lpstrDeviceType = TEXT("waveaudio");
+	OoenEffect.lpstrElementName = TEXT("Sound\\AddBottle.wav");
+	mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD_PTR)&OoenEffect);
+	OoenEffect.wDeviceID;
+	Effectid = OoenEffect.wDeviceID;
+	mciSendCommand(Effectid, MCI_PLAY, MCI_NOTIFY, (DWORD_PTR)&OoenEffect);
+	Sleep(50);
+	mciSendCommand(Effectid, MCI_SEEK, MCI_SEEK_TO_START, (DWORD_PTR)&OoenEffect);
+}
+
+void PlayAddMoney(MCI_OPEN_PARMS& OoenEffect, UINT& Effectid)
+{
+	OoenEffect.lpstrDeviceType = TEXT("waveaudio");
+	OoenEffect.lpstrElementName = TEXT("Sound\\AddMoney.wav");
+	mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD_PTR)&OoenEffect);
+	OoenEffect.wDeviceID;
+	Effectid = OoenEffect.wDeviceID;
+	mciSendCommand(Effectid, MCI_PLAY, MCI_NOTIFY, (DWORD_PTR)&OoenEffect);
+	Sleep(50);
+	mciSendCommand(Effectid, MCI_SEEK, MCI_SEEK_TO_START, (DWORD_PTR)&OoenEffect);
 }

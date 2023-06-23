@@ -14,7 +14,7 @@ Bottle::~Bottle()
 {
 }
 
-int Bottle::Movement(char cMap[20][30], int& iMoney)
+int Bottle::Movement(char cMap[20][30], int& iMoney, MCI_OPEN_PARMS& OoenEffect, UINT& Effectid)
 {
 	if (c_mLastMap == '3')
 		cMap[c_mPosition.y][c_mPosition.x] = '3';
@@ -40,7 +40,7 @@ int Bottle::Movement(char cMap[20][30], int& iMoney)
 		if (cMap[c_mPosition.y][c_mPosition.x] == '3')
 			cMap[c_mPosition.y][c_mPosition.x] = '2';
 
-		BottleDelete(iMoney);
+		BottleDelete(iMoney, OoenEffect, Effectid);
 		return 1;
 	}
 
