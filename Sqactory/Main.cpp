@@ -24,6 +24,7 @@ void GameClear();
 MCI_OPEN_PARMS openBgm; //여는거
 MCI_OPEN_PARMS OoenEffect; //여는거
 UINT Bgmid, Effectid;
+float startTime;
 
 int main()
 {
@@ -42,6 +43,8 @@ int main()
 	MachineInit();
 
 	system("cls");
+
+	startTime = clock();
 
 	while (true)
 	{
@@ -102,6 +105,8 @@ void GameClear()
 
 	Gotoxy(0, 15);
 
+	cout << "플레이타임 : " << (clock() - startTime) / 1000 << "초\n\n";
+
 	cout << "다시 플레이는 ↑ \n게임종료는 ↓\n";
 	while (true)
 	{
@@ -114,6 +119,6 @@ void GameClear()
 			break;
 	}
 
-	Gotoxy(30, 15);
+	Gotoxy(30, 17);
 	cout << "\r수고하셨습니다. \n                            \n\n\n\n";
 }
